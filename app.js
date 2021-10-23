@@ -76,6 +76,8 @@
 
 // console.log(two); // prints 'two: declared outside the block', because two declared is a separate variable. The 'let' variable are unrelated and threfore are unaffected by each other.
 
+const profileDataArgs = process.argv.slice(2);
+
 const printProfileData = profileDataArr => {
     // This ...
     for ( let i= 0; i < profileDataArr.length; i += 1) {
@@ -87,3 +89,5 @@ const printProfileData = profileDataArr => {
     // Is the same as this...
     profileDataArr.forEach((profileItem => console.log(profileItem)));
 };
+
+printProfileData(profileDataArgs);
