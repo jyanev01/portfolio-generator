@@ -1,5 +1,7 @@
 const fs = require('fs');
 const profileDataArgs = process.argv.slice(2, process.argv.length);
+const inquire = require('inquire');
+
 // const name = profileDataArgs[0];
 // const github = profileDataArgs[1];
 
