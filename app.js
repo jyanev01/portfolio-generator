@@ -8,11 +8,12 @@
 
 //     console.log('Portfolio complete! Check out index.html to see the output!');
 // });
+const fs = require('fs');
 const inquirer = require('inquirer');
+const generatePage = require('./src/page-template');
+
 const promptUser = () => {
-
-
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -24,7 +25,7 @@ const promptUser = () => {
                     console.log('Please enter your name!');
                     return false;
                 }
-            } 
+            }
         },
         {
             type: 'input',
@@ -37,17 +38,29 @@ const promptUser = () => {
                     console.log('Please enter your GitHub!');
                     return false;
                 }
-
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAbout',
+            message: 'Would you like to enter some information about yourself for an "About" section?',
+            default: true
         },
         {
             type: 'input',
             name: 'about',
-            message: 'Provide some information about yourself:'
+            message: 'Provide some information about yourself:',
+            when: ({ confirmAbout }) => {
+                if (confirmAbout) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     ]);
 };
 
-promptUser().then(answers => console.log(answers));
 
 const promptProject = portfolioData => {
     console.log(`
@@ -55,6 +68,11 @@ const promptProject = portfolioData => {
 Add a New Project
 ==================
 `);
+
+  // If there's no 'projects' array property, create one
+    if (!portfolioData.project) {
+        portfolioData.projects = [];
+    }
     return inquirer.prompt([
         {
             type: 'input',
@@ -67,7 +85,7 @@ Add a New Project
                     console.log('Please enter your project name!');
                     return false;
                 }
-
+            }
         },
         {
             type: 'input',
@@ -81,6 +99,7 @@ Add a New Project
                     return false;
                 }
 
+            }
         },
         {
             type: 'checkbox',
@@ -100,7 +119,7 @@ Add a New Project
                     console.log('Please enter your GitHub link!');
                     return false;
                 }
-
+            }
         },
         {
             type: 'confirm',
