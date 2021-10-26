@@ -1,4 +1,5 @@
-const fs = require('fs');
+// const fs = require('fs');
+const {writeFile, copyFile} = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
 const generatePage = require('./src/page-template');
 
@@ -132,7 +133,24 @@ Add a New Project
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-        const pageHTML = generatePage(portfolioData);
+        return generatePage(portfolioData);
+    })
+    .then(pageHTML => {
+        return fs.writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        consoloe.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        consoloe.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+
+
 
         fs.writeFile('./dist/index.html', pageHTML, err => {
             if (err) {
